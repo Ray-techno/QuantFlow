@@ -1,0 +1,30 @@
+# Core Framework
+streamlit==1.31.0
+
+# Data Processing
+pandas==2.1.4
+numpy==1.26.3
+
+# Visualization
+plotly==5.18.0
+
+# API Requests
+requests==2.31.0
+
+# Authentication & Security
+bcrypt==4.1.2
+cryptography==42.0.0
+
+# Database
+# SQLite3 is included in Python standard library
+
+# Additional Utilities
+python-dateutil==2.8.2
+
+# Optional: For enhanced features
+# streamlit-authenticator==0.2.3  # If using pre-built auth component
+
+# Development Dependencies (Optional)
+# pytest==7.4.3
+# black==23.12.1
+# flake8==7.0.0
