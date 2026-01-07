@@ -40,7 +40,7 @@ if 'monitoring' not in st.session_state:
 if 'signals_count' not in st.session_state:
     st.session_state.signals_count = 0
 if 'theme' not in st.session_state:
-    st.session_state.theme = 'dark'
+    st.session_state.theme = 'light'  # Changed from 'dark' to 'light'
 if 'current_price' not in st.session_state:
     st.session_state.current_price = None
 if 'current_page' not in st.session_state:
@@ -54,7 +54,7 @@ notification_manager = NotificationManager(db_manager)
 trading_engine = TradingEngine(db_manager, notification_manager)
 indicator_engine = IndicatorEngine(db_manager)
 
-def load_css(theme='dark'):
+def load_css(theme='light'):  # Changed default from 'dark' to 'light'
     if theme == 'dark':
         st.markdown("""
         <style>
@@ -107,7 +107,7 @@ def login_page():
             username = st.text_input("Username", key="login_user")
             password = st.text_input("Password", type="password", key="login_pass")
             
-            if st.button("Login", width="stretch", type="primary"):
+            if st.button("Login", use_container_width=True, type="primary"):
                 if username and password:
                     user = auth_manager.authenticate_user(username, password)
                     if user:
@@ -128,7 +128,7 @@ def login_page():
             new_pass = st.text_input("Password", type="password", key="reg_pass")
             confirm_pass = st.text_input("Confirm Password", type="password", key="reg_confirm")
             
-            if st.button("Register", width="stretch", type="primary"):
+            if st.button("Register", use_container_width=True, type="primary"):
                 if new_user and new_email and new_pass and confirm_pass:
                     if new_pass != confirm_pass:
                         st.error("Passwords don't match")
@@ -159,9 +159,9 @@ def navigation_menu():
             st.rerun()
     
     with col4:
-        theme_icon = "🌙" if st.session_state.theme == 'dark' else "☀️"
+        theme_icon = "🌙" if st.session_state.theme == 'light' else "☀️"  # Changed logic to match new default
         if st.button(theme_icon, use_container_width=True):
-            st.session_state.theme = 'light' if st.session_state.theme == 'dark' else 'dark'
+            st.session_state.theme = 'dark' if st.session_state.theme == 'light' else 'light'  # Changed logic
             st.rerun()
     
     with col5:
@@ -208,7 +208,7 @@ def sidebar_controls():
         refresh = st.slider("Refresh (s)", 5, 60, 
                           st.session_state.user_settings.get('refresh_interval', 5))
         
-        if st.button("💾 Save Settings", width="stretch"):
+        if st.button("💾 Save Settings", use_container_width=True):
             settings = {
                 'symbol': symbol,
                 'timeframe': price_tf,
@@ -244,7 +244,7 @@ def sidebar_controls():
             new_label = st.text_input("Label (optional)")
             new_color = st.color_picker("Color", "#2962FF")
             
-            if st.button("Add Level", width="stretch"):
+            if st.button("Add Level", use_container_width=True):
                 if new_price > 0:
                     level = {
                         'price': new_price,
@@ -274,7 +274,7 @@ def sidebar_controls():
                         db_manager.delete_price_level(level['level_id'], st.session_state.user_id)
                         st.rerun()
             
-            if st.button("🗑️ Clear All", width="stretch"):
+            if st.button("🗑️ Clear All", use_container_width=True):
                 for lvl in levels:
                     db_manager.delete_price_level(lvl['level_id'], st.session_state.user_id)
                 st.rerun()
@@ -283,11 +283,11 @@ def sidebar_controls():
         
         # Monitoring control
         if not st.session_state.monitoring:
-            if st.button("▶️ Start Monitoring", width="stretch", type="primary"):
+            if st.button("▶️ Start Monitoring", use_container_width=True, type="primary"):
                 st.session_state.monitoring = True
                 st.rerun()
         else:
-            if st.button("⏸️ Stop Monitoring", width="stretch"):
+            if st.button("⏸️ Stop Monitoring", use_container_width=True):
                 st.session_state.monitoring = False
                 st.rerun()
     
